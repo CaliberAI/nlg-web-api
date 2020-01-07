@@ -1,0 +1,4 @@
+gunicorn
+flask
+-e git+https://github.com/huggingface/transformers.git@master#egg=transformers
+torch
