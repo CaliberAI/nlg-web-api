@@ -8,10 +8,7 @@ from transformers import GPT2Tokenizer, GPT2LMHeadModel
 
 generate_blueprint = Blueprint('generate', __name__)
 
-model = GPT2LMHeadModel.from_pretrained('gpt2')
-tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
-
-def get_sentences(input, split_sentences):
+def get_sentences(input, split_sentences, tokenizer):
     text = tokenizer.decode(input.tolist(), skip_special_tokens=True)
     if split_sentences:
         text = sent_tokenize(text)
@@ -37,12 +34,16 @@ def generate():
     params['top_k'] = request.args.get('top_k', 50, int)
     params['top_p'] = request.args.get('top_p', 1, float)
     params['length_penalty'] = request.args.get('length_penalty', 2, float)
+    params['model'] = request.args.get('model', 'gpt2')
     meta['model_params'] = params
 
     if params['num_return_sequences'] > 1 and not params['sample']:
       meta['advice'] = 'num_return_sequences > 1 works best with sample=true'
 
     sequences = []
+
+    model = GPT2LMHeadModel.from_pretrained(params['model'])
+    tokenizer = GPT2Tokenizer.from_pretrained(params['model'])
 
     if len(params['seed']) > 0:
       input_ids = torch.tensor(tokenizer.encode(params['seed'])).unsqueeze(0)
@@ -64,10 +65,10 @@ def generate():
         if params['num_return_sequences'] > 1:
             for i in range(len(output[j])):
                 sequences.append(get_sentences(
-                    output[j][i], params['split_sentences']))
+                    output[j][i], params['split_sentences'], tokenizer))
         else:
             sequences.append(get_sentences(
-                output[j], params['split_sentences']))
+                output[j], params['split_sentences'], tokenizer))
 
     return jsonify({'sequences': sequences,
                     'meta': meta})
