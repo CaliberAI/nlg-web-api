@@ -36,7 +36,7 @@ def generate():
     params['temperature'] = request.args.get('temperature', 1.0, float)
     params['top_k'] = request.args.get('top_k', 50, int)
     params['top_p'] = request.args.get('top_p', 1, float)
-    params['length_penalty'] = request.args.get('length_penalty', 1, float)
+    params['length_penalty'] = request.args.get('length_penalty', 2, float)
     meta['model_params'] = params
 
     if params['num_return_sequences'] > 1 and not params['sample']:
