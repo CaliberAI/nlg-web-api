@@ -14,3 +14,8 @@ To run locally;
 
 ## Clean up
 - `pip uninstall -r requirements.txt -y`
+
+## Deploy
+You'll need the private/public key of the server for this to work;
+- `git remote add live ssh://root@SERVER/home/repo/site.git`
+- `git push live master`
