@@ -1,18 +1,14 @@
-# GPT-2 Web API
-A web API for GPT-2.
+# NLG Web API
+A Python Flask web API for NLG provided by [HuggingFace Transformers models](https://github.com/huggingface/transformers/).
+
+## Usage
+- `GET /generate?max_length=500&num_return_sequences=2&seed=The world is not enough.`
 
 ## Development
 To run locally;
+- `echo 'FLASK_ENV=development' > .env`
 - `pip install -r requirements.txt`
-- `export FLASK_APP=main.py`
-- `export FLASK_ENV=development`
 - `flask run`
 
 ## Clean up
 - `pip uninstall -r requirements.txt -y`
-
-## Deployment
-This app works well with Heroku.
-- Install the Heroku CLI and set it up
-- `heroku create`
-- `git push heroku master`
