@@ -3,3 +3,5 @@ flask
 -e git+https://github.com/huggingface/transformers.git@master#egg=transformers
 torch
 nltk
+flask-restplus
+python-dotenv
