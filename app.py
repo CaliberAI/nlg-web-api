@@ -9,3 +9,6 @@ def create_app():
     app.register_blueprint(generate_blueprint)
 
     return app
+
+
+app = create_app()
