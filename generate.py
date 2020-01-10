@@ -1,11 +1,15 @@
 from flask import Blueprint, jsonify, request
 from flask_restplus import inputs
 from os import environ
+from dotenv import load_dotenv
 
 from nltk.tokenize import sent_tokenize
 import nltk
 import torch
 from transformers import GPT2Tokenizer, GPT2LMHeadModel
+
+#FIX: Shouldn't need to be in this module but gunicorn needs it
+load_dotenv('.env')
 
 generate_blueprint = Blueprint('generate', __name__)
 
