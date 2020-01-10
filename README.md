@@ -19,3 +19,11 @@ To run locally;
 You'll need the private/public key of the server for this to work;
 - `git remote add live ssh://root@SERVER/home/repo/site.git`
 - `git push live master`
+
+## Configuration
+- Set `MODEL_NAME` in `.env` to one of;
+  - `distilgpt2`
+  - `gpt2` (default)
+  - `gpt2-medium`
+  - `gpt2-large`
+  - `gpt2-xl`
