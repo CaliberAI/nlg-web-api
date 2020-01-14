@@ -5,3 +5,4 @@ torch
 nltk
 flask-restplus
 python-dotenv
+flask-cors
