@@ -13,22 +13,24 @@ load_dotenv('.env')
 
 generate_blueprint = Blueprint('generate', __name__)
 
+model = None
+tokenizer = None
 model_name = environ.get('MODEL_NAME') or 'gpt2'
-model = GPT2LMHeadModel.from_pretrained(model_name)
-tokenizer = GPT2Tokenizer.from_pretrained(model_name)
+
+def first_load():
+    global model, tokenizer
+    model = GPT2LMHeadModel.from_pretrained(model_name)
+    tokenizer = GPT2Tokenizer.from_pretrained(model_name)
 
 
 def get_sentences(input, split_sentences, tokenizer):
-    text = tokenizer.decode(input.tolist(), skip_special_tokens=True)
-    if split_sentences:
-        text = sent_tokenize(text)
-        return text
-    else:
-        return [text]
-
+    text = tokenizer.decode(input, skip_special_tokens=True)
+    return sent_tokenize(text) if split_sentences else [text]
 
 @generate_blueprint.route('/generate')
 def generate():
+    global model, tokenizer
+
     meta = {}
     params = {}
     params['seed'] = request.args.get('seed', '')
@@ -51,6 +53,9 @@ def generate():
     if params['num_return_sequences'] > 1 and not params['sample']:
         meta['advice'] = 'num_return_sequences > 1 works best with sample=true'
 
+    if not model:
+        first_load()
+
     sequences = []
 
     if len(params['seed']) > 0:
@@ -69,14 +74,13 @@ def generate():
                             top_p=params['top_p'],
                             length_penalty=params['length_penalty'])
 
-    for j in range(len(output)):
-        if params['num_return_sequences'] > 1:
-            for i in range(len(output[j])):
-                sequences.append(get_sentences(
-                    output[j][i], params['split_sentences'], tokenizer))
-        else:
+    if params['num_return_sequences'] > 1:
+        for i in range(len(output[0])):
             sequences.append(get_sentences(
-                output[j], params['split_sentences'], tokenizer))
+                output[0][i], params['split_sentences'], tokenizer))
+    else:
+        sequences.append(get_sentences(
+            output[0], params['split_sentences'], tokenizer))
 
     return jsonify({'sequences': sequences,
                     'meta': meta})
