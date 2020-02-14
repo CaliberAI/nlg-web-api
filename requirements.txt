@@ -6,4 +6,5 @@ nltk
 flask-restplus
 python-dotenv
 flask-cors
+bcrypt
 Werkzeug == 0.16.1
