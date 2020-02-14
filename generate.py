@@ -6,10 +6,17 @@ from dotenv import load_dotenv
 from nltk.tokenize import sent_tokenize
 import nltk
 import torch
+import bcrypt
 from transformers import GPT2Tokenizer, GPT2LMHeadModel
 
 #FIX: Shouldn't need to be in this module but gunicorn needs it
 load_dotenv('.env')
+
+#TODO: Replace with dynamic per-user token store
+MASTER_API_KEY = environ.get('MASTER_API_KEY')
+
+if not MASTER_API_KEY:
+    raise Exception('MASTER_API_KEY not set')
 
 generate_blueprint = Blueprint('generate', __name__)
 
@@ -22,6 +29,8 @@ def first_load():
     model = GPT2LMHeadModel.from_pretrained(model_name)
     tokenizer = GPT2Tokenizer.from_pretrained(model_name)
 
+def hash_func(key):
+    return bcrypt.hashpw(key.encode("UTF-8"), bcrypt.gensalt())
 
 def get_sentences(input, split_sentences, tokenizer):
     text = tokenizer.decode(input, skip_special_tokens=True)
@@ -29,6 +38,13 @@ def get_sentences(input, split_sentences, tokenizer):
 
 @generate_blueprint.route('/generate')
 def generate():
+    #TODO: Add .yaml document for X-Api-Key; otherwise, need to use cURL, or need to switch to second auth variable for directly putting password in URL
+    auth = request.headers.get("X-Api-Key")
+    #auth = request.args.get('password')
+
+    if not auth or not bcrypt.checkpw(auth.encode("UTF-8"), hash_func(MASTER_API_KEY)):
+        return "Not authenticated to use this app. Please provide a password."
+
     global model, tokenizer
 
     meta = {}
@@ -84,3 +100,5 @@ def generate():
 
     return jsonify({'sequences': sequences,
                     'meta': meta})
+
+   
