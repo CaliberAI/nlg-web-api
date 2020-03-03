@@ -21,6 +21,11 @@ You'll need the private/public key of the server for this to work;
 - `git remote add live ssh://root@SERVER/home/repo/site.git`
 - `git push live master`
 
+### AWS Elastic Beanstalk
+- `eb init -p python-3.6 nlg-api --region eu-west-1`
+- `eb create prod -i t2.large --envvars MODEL_NAME=gpt2-medium -r eu-west-1`
+- `eb deploy`
+
 ## Configuration
 - Set `MODEL_NAME` in `.env` to one of;
   - `distilgpt2`
@@ -28,3 +33,4 @@ You'll need the private/public key of the server for this to work;
   - `gpt2-medium`
   - `gpt2-large`
   - `gpt2-xl`
+
