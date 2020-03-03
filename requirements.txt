@@ -1,6 +1,6 @@
 gunicorn
 flask
--e git+https://github.com/huggingface/transformers.git@master#egg=transformers
+transformers
 torch
 nltk
 werkzeug==0.16.1
