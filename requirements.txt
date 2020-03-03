@@ -3,6 +3,7 @@ flask
 -e git+https://github.com/huggingface/transformers.git@master#egg=transformers
 torch
 nltk
-flask-restplus
+werkzeug==0.16.1
+flask-restx
 python-dotenv
 flask-cors

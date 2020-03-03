@@ -7,6 +7,7 @@ A Python Flask web API for NLG provided by [HuggingFace Transformers models](htt
 ## Development
 To run locally;
 - `python3 -m venv .`
+- `source ./bin/activate`
 - `echo 'FLASK_ENV=development' > .env`
 - `pip install -r requirements.txt`
 - `python setup.py`
