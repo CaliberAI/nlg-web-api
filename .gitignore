@@ -9,6 +9,11 @@ src
 .vscode
 *.log
 *.pyc
+distilgpt2
+gpt2
+gpt2-medium
+gpt2-large
+gpt2-xl
 # Elastic Beanstalk Files
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml

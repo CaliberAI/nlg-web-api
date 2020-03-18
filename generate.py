@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
 from flask_restx import inputs
-from os import environ
+import os
 from dotenv import load_dotenv
 
 from nltk.tokenize import sent_tokenize
@@ -13,9 +13,11 @@ load_dotenv('.env')
 
 generate_blueprint = Blueprint('generate', __name__)
 
-model_name = environ.get('MODEL_NAME') or 'gpt2'
-model = GPT2LMHeadModel.from_pretrained(model_name)
-tokenizer = GPT2Tokenizer.from_pretrained(model_name)
+model_name = os.environ.get('MODEL_NAME') or 'gpt2'
+cwd = os.getcwd()
+model_path = cwd + '/' + model_name
+model = GPT2LMHeadModel.from_pretrained(model_path)
+tokenizer = GPT2Tokenizer.from_pretrained(model_path)
 
 
 def get_sentences(input, split_sentences, tokenizer):

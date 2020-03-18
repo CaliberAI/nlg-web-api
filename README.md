@@ -10,21 +10,18 @@ To run locally;
 - `source ./bin/activate`
 - `echo 'FLASK_ENV=development' > .env`
 - `pip install -r requirements.txt`
-- `python setup.py`
-- `flask run`
+- `./download.sh`
+- `python application.py`
 
 ## Clean up
 - `pip uninstall -r requirements.txt -y`
 
 ## Deploy
-You'll need the private/public key of the server for this to work;
-- `git remote add live ssh://root@SERVER/home/repo/site.git`
-- `git push live master`
+- `eb deploy`
 
 ### AWS Elastic Beanstalk
-- `eb init -p python-3.6 nlg-api --region eu-west-1`
-- `eb create prod -i t2.large --envvars MODEL_NAME=gpt2-medium -r eu-west-1`
-- `eb deploy`
+- `eb init`
+- `eb create nlg-web-api-production`
 
 ## Configuration
 - Set `MODEL_NAME` in `.env` to one of;
