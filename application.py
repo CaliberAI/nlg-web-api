@@ -12,7 +12,8 @@ def create_application():
 
     return application
 
+application = create_application()
 
 if __name__ == "__main__":
-    application = create_application()
+    
     application.run()

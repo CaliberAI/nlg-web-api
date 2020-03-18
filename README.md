@@ -21,7 +21,7 @@ To run locally;
 
 ### AWS Elastic Beanstalk
 - `eb init`
-- `eb create nlg-web-api-production`
+- `eb create`
 
 ## Configuration
 - Set `MODEL_NAME` in `.env` to one of;
