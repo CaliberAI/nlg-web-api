@@ -10,7 +10,7 @@ To run locally;
 - `source ./bin/activate`
 - `echo 'FLASK_ENV=development' > .env`
 - `pip install -r requirements.txt`
-- `./download.sh`
+- `./download-model.sh`
 - `python application.py`
 
 ## Clean up
