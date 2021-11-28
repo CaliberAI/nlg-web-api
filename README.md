@@ -5,7 +5,7 @@ A Python Flask web API for NLG provided by [HuggingFace Transformers models](htt
 - `GET /generate?max_length=500&num_return_sequences=2&seed=The world is not enough.`
 
 ## Development
-To run locally;
+To run locally:
 - `python3 -m venv .`
 - `source ./bin/activate`
 - `echo 'FLASK_ENV=development' > .env`
