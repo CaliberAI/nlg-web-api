@@ -3,7 +3,7 @@ flask
 transformers
 torch
 nltk
-werkzeug==0.16.1
+werkzeug==2.2.3
 flask-restx
 python-dotenv
 flask-cors
